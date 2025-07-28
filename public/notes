@@ -1,0 +1,197 @@
+
+Starting 
+PS C:\Users\hamid> cat .\gcom.bat
+ @echo off
+ rem cd \\wsl.localhost\Ubuntu\home\hamid\gcom
+ wsl -l -v
+ wsl  ~ -d Ubuntu
+PS C:\Users\hamid> .\gcom.bat
+  NAME              STATE           VERSION
+* docker-desktop    Stopped         2
+  Ubuntu            Stopped         2
+Welcome to Ubuntu 24.04.2 LTS (GNU/Linux 6.6.87.2-microsoft-standard-WSL2 x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Thu Jul 17 09:31:06 +01 2025
+
+  System load:  4.58                Processes:             45
+  Usage of /:   0.3% of 1006.85GB   Users logged in:       0
+  Memory usage: 12%                 IPv4 address for eth0: 172.24.123.21
+  Swap usage:   0%
+
+
+This message is shown once a day. To disable it please create the
+/home/hamid/.hushlogin file.
+
+hamid@DellRM:~$ ./devstart.sh
+
+--------------------------------
+Livewire
+#1 Install Livewire
+composer require livewire/livewire
+#2 Create a component
+php artisan make:livewire counter
+
+#Running this command will generate the following two files:       
+
+#file: app/Http/Livewire/Counter.php
+namespace App\Http\Livewire;
+use Livewire\Component;
+
+class Counter extends Component {
+   public function render()    {return view('livewire.counter'); }
+
+}
+#we can modify it 
+class Counter extends Component {
+    public $count = 0;
+    public function increment()    {  $this->count++;    }
+    public function render() { return view('livewire.counter'); }
+}
+#file : resources/views/livewire/counter.blade.php
+<div>   <h1>Hello World!</h1> </div>
+<div style="text-align: center">
+    <button wire:click="increment">+</button>
+    <h1>{{ $count }}</h1>
+</div>
+
+#3 Include the component
+#Include the JavaScript (on every page that will be using Livewire).
+...
+
+    @livewireStyles
+
+</head>
+
+<body>
+
+    ...
+  <livewire:counter /> 
+ 
+
+    @livewireScripts
+
+</body>
+
+</html>
+#-------------------------------------------------------------------------
+  php artisan make:livewire post.show
+
+Now, the two created files will be in sub-folders:
+
+    app/Http/Livewire/Post/Show.php
+
+<?php
+namespace App\Livewire\Post;
+use Livewire\Component;
+class Show extends Component {
+    public function render()     {
+        return view('livewire.post.show');
+    }
+}
+
+    resources/views/livewire/post/show.blade.php
+@extends('layouts.main')
+@section('title', 'Show Test Component')
+@section('content')
+<h1>This is the Show Test  Page</h1>
+<livewire:post.show>
+@endsection
+
+    app/routes/web.php
+Route::get('/test', function () { 
+  return view('pages.show-test',['currentRoute' => 'test']);
+  });
+#----------------------------------------------------------------------
+#Generating Tests   
+  php artisan make:livewire ShowPosts --test
+
+#Inline Components
+If you wish to create Inline components (Components without .blade.php files), 
+you can add the --inline flag to the command:
+
+  php artisan make:livewire ShowPosts --inline
+#------------------------------------------------------------------------------
+  php artisan make:livewire ShowPosts --test
+ COMPONENT CREATED  🤙
+
+CLASS: app/Livewire/ShowPosts.php
+<?php
+namespace App\Livewire;
+use Livewire\Component;
+class ShowPosts extends Component
+{
+    public function render()
+    {
+        return view('livewire.show-posts');
+    }
+}
+
+VIEW:  resources/views/livewire/show-posts.blade.php
+<div>
+    {{-- In work, do what you enjoy. --}}
+</div>
+
+TEST:  tests/Feature/Livewire/ShowPostsTest.php
+
+<?php
+namespace Tests\Feature\Livewire;
+use App\Livewire\ShowPosts;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Livewire\Livewire;
+use Tests\TestCase;
+class ShowPostsTest extends TestCase
+{
+    /** @test */
+    public function renders_successfully()
+    {
+        Livewire::test(ShowPosts::class)
+            ->assertStatus(200);
+    }
+}
+#------------------------------------------------------------------------------
+Rendering Components
+<div>     <livewire:show-posts /> </div>
+
+Alternatively you can use the @livewire blade directive:     
+
+@livewire('show-posts')
+If you have a component inside of a sub-folder with its own namespace, 
+you must use a dot (.) prefixed with the namespace. example folder post
+<livewire:post.show-posts />
+
+#Passing Parameters
+<livewire:show-post :post="$post">
+    
+Alternatively, this is how you can pass in parameters using the Blade directive.
+
+@livewire('show-post', ['post' => $post])
+
+Receiving Parameters
+
+class ShowPost extends Component {
+    public $post;
+    ...
+
+}
+
+If for whatever reason, this automatic behavior doesn't work well 
+you can intercept parameters using the mount() method:
+use \Illuminate\Session\SessionManager;
+class ShowPost extends Component {
+    public $title;
+    public $content;
+    public function mount(SessionManager $session, $post)    {
+        $session->put("post.{$post->id}.last_viewed", now());
+        #parameters
+        $this->title = $post->title;
+        $this->content = $post->content;
+    }
+}
+In Livewire components, you use mount() instead of a class constructor __construct()
+like you may be used to
+

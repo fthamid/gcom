@@ -1,0 +1,1 @@
+<p>© 2025 Unimatel Gcom</p><?php /**PATH /home/hamid/gcom/resources/views/includes/footer.blade.php ENDPATH**/ ?>
