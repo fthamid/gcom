@@ -2,7 +2,7 @@
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProduitController;
 use App\Http\Controllers\FactureController;
-
+use App\Livewire\ClientList;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\ShowPosts;
 use App\Livewire\Post\Show;
@@ -13,6 +13,7 @@ use App\Livewire\SayHi;
 Route::get('/', function () { return view('pages.home',['name' => 'Les comptoirs Unimatel']);});
 Route::get('/contact', function () { return view('pages.contact'); });
 Route::resource('clients', ClientController::class);
+Route::get('/clientsList', ClientList::class);
 Route::resource('produits', ProduitController::class);
 Route::resource('factures', FactureController::class);
 

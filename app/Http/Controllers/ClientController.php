@@ -3,16 +3,28 @@
 namespace App\Http\Controllers;
 use App\Models\Client;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\Paginator;
+//use Illuminate\Pagination\Paginator;
+use Livewire\WithPagination;    
+
 class ClientController extends Controller
 {
+    use WithPagination;
     public $perPage = 20;   // nombre de clients par page
+    public $search = '';
+    public $sortBy = 'nom';
+    public $sortDirection = 'asc';
+    public $selectedClient = null;
+    public $selectedAction = null;
+    public $selectedClients = [];
+   
     /**
      * Display a listing of the resource.
      */
     public function index()     {
         //
-        $clients = Client::paginate($this->perPage);
+        $clients = Client::search($this->search)
+        ->orderBy($this->sortBy, $this->sortDirection)
+        ->paginate($this->perPage);    
         return view('clients.index', compact('clients'),['currentRoute' => 'clients']);
     }
     /**

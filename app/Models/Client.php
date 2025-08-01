@@ -21,7 +21,13 @@ class Client extends Model
         'telephone',
         'adresse',
     ];
-       
+    public function scopeSearch($query, $search)
+    {
+        return $query->where('nom', 'like', '%' . $search . '%')
+        ->orWhere('email', 'like', '%' . $search . '%')
+        ->orWhere('telephone', 'like', '%' . $search . '%')
+        ->orWhere('adresse', 'like', '%' . $search . '%');
+    }
     public function factures()  {
         return $this->hasMany(Facture::class);
     }
