@@ -3,15 +3,16 @@
 namespace App\Http\Controllers;
 use App\Models\Client;
 use Illuminate\Http\Request;
-
+use Illuminate\Pagination\Paginator;
 class ClientController extends Controller
 {
+    public $perPage = 20;   // nombre de clients par page
     /**
      * Display a listing of the resource.
      */
     public function index()     {
         //
-        $clients = Client::all();
+        $clients = Client::paginate($this->perPage);
         return view('clients.index', compact('clients'),['currentRoute' => 'clients']);
     }
     /**

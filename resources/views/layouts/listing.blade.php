@@ -52,6 +52,11 @@
     @endforeach
   
     </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="{{ count($headers) + 3 }}">  {{ $table->links() }}  </td>
+        </tr>
+    </tfoot>
 </table>
 
 @endsection
