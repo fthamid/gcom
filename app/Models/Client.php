@@ -26,6 +26,9 @@ class Client extends Model
         return $query->where('nom', 'like', '%' . $search . '%')
         ->orWhere('email', 'like', '%' . $search . '%')
         ->orWhere('telephone', 'like', '%' . $search . '%')
+        ->orWhere('ville', 'like', '%' . $search . '%')
+        ->orWhere('pays', 'like', '%' . $search . '%')
+        ->orWhere('code_postal', 'like', '%' . $search . '%')
         ->orWhere('adresse', 'like', '%' . $search . '%');
     }
     public function factures()  {

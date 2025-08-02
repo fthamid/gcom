@@ -14,14 +14,24 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(100)->create();
-         /*
-        Client::factory(100)->create();
-       
+        
+     
+        
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'badr',
+            'email' => 'badr@unimatel.ma',
         ]);
-        */
+        User::factory(200)->create();
+        
+        Client::factory()->create([
+            'nom' => 'Les comptoirs Unimatel',
+            'email' => 'unimatel@unimatel.ma',
+            'telephone' => '+212 6 61 36 65 25',
+            'ville' => 'Oujda', 'pays' => 'Maroc',
+            'code_postal' => '60000','is_client' => true,
+            'idf' => '05300960', 'ice' => '008090123456789',
+        ]);
+        Client::factory(300)->create();
+    
     }
 }
