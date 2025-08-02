@@ -1,10 +1,9 @@
 <?php
-namespace App\Livewire;
 
+namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Client;
-
 class ClientList extends Component
 {
     public $search = '';
@@ -19,5 +18,6 @@ class ClientList extends Component
         ->paginate($this->perPage)]);
     }
 }
+#==============
 
-
+@livewire('client-list')

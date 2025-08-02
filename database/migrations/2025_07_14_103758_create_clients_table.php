@@ -17,6 +17,12 @@ return new class extends Migration
             $table->string('email')->nullable;
             $table->string('telephone')->nullable;
             $table->text('adresse')->nullable;
+            $table->string('ville')->default('Oujda');
+            $table->string('pays')->default('Maroc');
+            $table->string('code_postal')->nullable;
+            $table->string('idf')->nullable;
+            $table->string('ice')->nullable;
+            $table->boolean('is_client')->default(true);
             $table->timestamps();
         });
     }

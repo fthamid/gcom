@@ -24,7 +24,13 @@ class ClientFactory extends Factory
             'nom' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'telephone' => fake()->phoneNumber(),
-            'adresse' => fake()->address()
+            'adresse' => fake()->address(),
+            'ville' => fake()->city(),
+            'pays' => fake()->country(),
+            'code_postal' => fake()->postcode(),
+            'idf' => fake()->randomNumber(8),
+            'ice' => fake()->randomNumber(8),
+            'is_client' => fake()->boolean(),
         ];
     }
 

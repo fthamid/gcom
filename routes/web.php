@@ -13,12 +13,12 @@ use App\Livewire\SayHi;
 Route::get('/', function () { return view('pages.home',['name' => 'Les comptoirs Unimatel']);});
 Route::get('/contact', function () { return view('pages.contact'); });
 Route::resource('clients', ClientController::class);
-Route::get('/clientsList', ClientList::class);
+Route::get('/clientsList', function () { return view('start');});
 Route::resource('produits', ProduitController::class);
 Route::resource('factures', FactureController::class);
 
 Route::get('/welcome', function () { return view('welcome');});
-Route::get('/test', function () { return view('pages.show-test');});
+Route::get('/test', function () { return view('start');});
 Route::get('/hello/{name?}', HelloWorld::class);
 Route::get('/post', ShowPosts::class);
 Route::get('/show', Show::class);
