@@ -14,7 +14,13 @@ class ClientList extends Component
     public $sortDirection = 'asc';
     public $perPage = 3;
     public $is_client ='';
+    public $all_selected = false;
+    public $is_selected = true;
+    public $selectedClients = [];
 
+    public function select($id) {
+        //$selected[] = $id;
+    }
     public function setSortBy($sortBy) {
         if($this->sortBy == $sortBy ) {
             $this->sortDirection = $this->sortDirection == 'asc' ? 'desc':'asc';

@@ -16,7 +16,7 @@
                                 </div>
                                 <input  type="text"  wire:model.live="search" 
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 "
-                                    placeholder="Search" required="">
+                                    placeholder="Chercher" required="">
                             </div>
                         </div>
                         <div class="flex space-x-3">
@@ -35,36 +35,18 @@
                         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                                 <tr>
-                                    <th scope="col" class="px-4 py-3" wire:click="setSortBy('nom')">
-                                        <button class="flex items-center">
-                                            Nom
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" 
-                                                stroke-width="1.5" stroke="currentColor" class="ml-1 size-3">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                @if($sortBy !== 'nom') 
-                                                    d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" 
-                                                @elseif( $sortDirection  == 'asc')
-                                                    d="m19.5 8.25-7.5 7.5-7.5-7.5"
-                                                @else
-                                                    d="m4.5 15.75 7.5-7.5 7.5 7.5"
-                                                @endif
-                                                />
-                                                </svg>
-                                        </button>
-                                                                                    
-                                        
-                                        
-                                    </th>
-                                    <th scope="col" class="px-4 py-3" wire:click="setSortBy('email')">Email</th>
-                                    <th scope="col" class="px-4 py-3" wire:click="setSortBy('telephone')">Téléphone</th>
-                                    <th scope="col" class="px-4 py-3" wire:click="setSortBy('is_client')">Type</th>
-                                    <th scope="col" class="px-4 py-3" wire:click="setSortBy('adresse')">Adresse</th>
-                                    <th scope="col" class="px-4 py-3" wire:click="setSortBy('code_postal')">Code Potstal</th>
-                                    <th scope="col" class="px-4 py-3" wire:click="setSortBy('ville')">Ville</th>
-                                    <th scope="col" class="px-4 py-3" wire:click="setSortBy('pays')">Pays</th>
+                                 <th><input type="checkbox" wire:model.live="all_selected"></td>   
+                                @include('includes.table_sortable_th', ['fieldName' => 'nom','displayName' => 'Nom'])
+                                @include('includes.table_sortable_th', ['fieldName' => 'email','displayName' => 'Email'])
+                                @include('includes.table_sortable_th', ['fieldName' => 'telephone','displayName' => 'Téléphone'])
+                                @include('includes.table_sortable_th', ['fieldName' => 'is_client','displayName' => 'Type'])
+                                @include('includes.table_sortable_th', ['fieldName' => 'adresse','displayName' => 'Adresse'])
+                                @include('includes.table_sortable_th', ['fieldName' => 'code_postal','displayName' => 'Code Potstal'])
+                                @include('includes.table_sortable_th', ['fieldName' => 'ville','displayName' => 'Ville'])
+                                @include('includes.table_sortable_th', ['fieldName' => 'pays','displayName' => 'Pays'])
+                                @include('includes.table_sortable_th', ['fieldName' => 'created_at','displayName' => 'Date création'])
+                                @include('includes.table_sortable_th', ['fieldName' => 'updated_at','displayName' => 'Dernière mise à jour'])
                                     
-                                    <th scope="col" class="px-4 py-3" wire:click="setSortBy('created_at')">Date Création</th>
-                                    <th scope="col" class="px-4 py-3" wire:click="setSortBy('updated_at')">Dernière mise à jour</th>
                                     <th>
                                         <span class="sr-only">Actions</span>
                                     </th>
@@ -72,8 +54,14 @@
                             </thead>
                             <tbody>
                                 @foreach($clients as $client)
+
                                 <tr wire:key="{{$client->id}}" class="border-b dark:border-gray-700">
-                                    <th scope="row"
+                                <td><input type="checkbox" class="form-control" wire:model.defer="selectedClients" 
+                                value="{{ $client->id}}"
+                                @if(in_array($client->id, $selectedClients) )) checked @endif>
+                            
+                            </td>
+                                    <td scope="row"
                                         class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         {{$client->nom}}</th>
                                     <td class="px-4 py-3">{{$client->email}}</td>

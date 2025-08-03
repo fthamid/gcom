@@ -18,7 +18,8 @@ Route::resource('produits', ProduitController::class);
 Route::resource('factures', FactureController::class);
 
 Route::get('/welcome', function () { return view('welcome');});
-Route::get('/test', function () { return view('start');});
+Route::match(['get', 'post'],'/test', function () { return view('start');});
+Route::post('/test', function () { return view('start');});
 Route::get('/hello/{name?}', HelloWorld::class);
 Route::get('/post', ShowPosts::class);
 Route::get('/show', Show::class);
