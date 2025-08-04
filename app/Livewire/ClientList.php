@@ -17,9 +17,17 @@ class ClientList extends Component
     public $all_selected = false;
     public $is_selected = true;
     public $selectedClients = [];
+    public $message;
+    public $nb_selected = 0;
 
     public function select($id) {
         //$selected[] = $id;
+    }
+    public function selectionChange($id) {
+        //dd( $this->selectedClients);
+        $this->message = sizeof($this->selectedClients)."=>".implode ("|", $this->selectedClients ) ;
+       //dd(in_array($id, $this->selectedClients));
+      
     }
     public function setSortBy($sortBy) {
         if($this->sortBy == $sortBy ) {
@@ -35,6 +43,7 @@ class ClientList extends Component
     }
     public function render()    
     {
+        //dd($this->sortBy);
         return view('livewire.client-list', [ 'clients' => Client::search($this->search)
         ->orderBy($this->sortBy, $this->sortDirection)
         ->when($this->is_client !== '', function($query) {

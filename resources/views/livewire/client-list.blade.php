@@ -19,6 +19,9 @@
                                     placeholder="Chercher" required="">
                             </div>
                         </div>
+                        <div class="flex">
+                        <input type="text" wire:model.live="message" placeholder="Message"/>
+                        </div>
                         <div class="flex space-x-3">
                             <div class="flex space-x-3 items-center">
                                 <label class="w-40 text-sm font-medium text-gray-900">Client Type :</label>
@@ -35,7 +38,7 @@
                         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                                 <tr>
-                                 <th><input type="checkbox" wire:model.live="all_selected"></td>   
+                                 <th><input type="checkbox" wire:model.live="all_selected"  ></th>   
                                 @include('includes.table_sortable_th', ['fieldName' => 'nom','displayName' => 'Nom'])
                                 @include('includes.table_sortable_th', ['fieldName' => 'email','displayName' => 'Email'])
                                 @include('includes.table_sortable_th', ['fieldName' => 'telephone','displayName' => 'Téléphone'])
@@ -56,14 +59,19 @@
                                 @foreach($clients as $client)
 
                                 <tr wire:key="{{$client->id}}" class="border-b dark:border-gray-700">
-                                <td><input type="checkbox" class="form-control" wire:model.defer="selectedClients" 
-                                value="{{ $client->id}}"
-                                @if(in_array($client->id, $selectedClients) )) checked @endif>
+                                <td><input type="checkbox" class="form-control" value="{{ $client->id }}"
+                                wire:model.live="selectedClients"
+                                wire:change="selectionChange('{{ $client->id}}')"
+                               
+                               
+                                />{{ $client->id }} 
+                              
+                                
                             
                             </td>
                                     <td scope="row"
                                         class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        {{$client->nom}}</th>
+                                        {{$client->nom}}</td>
                                     <td class="px-4 py-3">{{$client->email}}</td>
                                     <td class="px-4 py-3 text-green-500">{{$client->telephone}}</td>
                                     <td class="px-4 py-3 {{$client->is_client ? 'text-blue-500':'text-green-500'}}">{{$client->is_client ? "Client": "FRS"}}</td>
