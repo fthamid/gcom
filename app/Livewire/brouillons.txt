@@ -1,0 +1,4 @@
+M app/Livewire/ClientList.php
+ M resources/views/livewire/client-list.blade.php
+ M storage/framework/views/4b406b11547856c578ac0b577a077614.php
+ M storage/logs/laravel.log
